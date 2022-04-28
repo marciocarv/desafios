@@ -6,84 +6,147 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic Tac Toe</title>
     <style>
-        table td{
-            width: 200px;
-            height: 200px;
-            text-align: center;
-        }
-
         #container{
             display:flex;
             justify-content: center;
             align-items: center;
+            padding-top: 100px;
         }
 
-        #p00{
+        td{
+            width: 200px;
+            height: 200px;
+            text-align: center;
+            font-size: 50px;
+        }
+
+        .btop{
+            border-top: 1px solid;
+        }
+
+        .bbottom{
             border-bottom: 1px solid;
+        }
+
+        .bright{
             border-right: 1px solid;
         }
 
-        #p20{
-            border-top: 1px solid;
-            border-right: 1px solid;
-        }
-
-        #p02{
-            border-bottom: 1px solid;
-            border-left: 1px solid;
-        }
-
-        #p22{
-            border-top: 1px solid;
+        .bleft{
             border-left: 1px solid;
         }
     </style>
 </head>
 <body>
     <div id="container">
-        <table>
+        <table cellspacing="0">
             <tr>
-                <td id="p00">teste</td>
-                <td id="p01">teste</td>
-                <td id="p02">teste</td>
+                <td id="p00" class="bbottom bright" onclick="play(0,0)"></td>
+                <td id="p01" class="bbottom" onclick="play(0,1)"></td>
+                <td id="p02" class="bleft bbottom" onclick="play(0,2)"></td>
             </tr>
             <tr>
-                <td id="p10">teste</td>
-                <td id="p11">teste</td>
-                <td id="p12">teste</td>
+                <td id="p10" class="bright bbottom" onclick="play(1,0)"></td>
+                <td id="p11" class="bbottom" onclick="play(1,1)"></td>
+                <td id="p12" class="bleft bbottom" onclick="play(1,2)"></td>
             </tr>
             <tr>
-                <td id="p20">teste</td>
-                <td id="p21">teste</td>
-                <td id="p22">teste</td>
+                <td id="p20" class="bright" onclick="play(2,0)"></td>
+                <td id="p21" onclick="play(2,1)"></td>
+                <td id="p22" class="bleft" onclick="play(2,2)"></td>
             </tr>
         </table>
+        <button onclick="tableconsole()">mostrar tabela</button>
     </div>
 </body>
 <script>
-    let board = [[-1,0,0],[0,-1,0],[0,0,-1]];
-    let playerX = "X";
-    let playerO = "O";
+    let board = [[0,0,0],[0,0,0],[0,0,0]];
+    let player1 = true;
+    let player2 = false;
     let plays = 0;
     let result_row = 0;
     let result_column = 0;
-    let result_diagonal = 0;
+    let result_diagonalx = 0;
+    let result_diagonaly = 0;
+    let count = 0;
+    let element;
 
-    //let i;
-    //let j;
+    function play(i, j){
 
-    function checkDiagonal(){
-        board.forEach(function(row, i){
-            result_diagonal += row[i];
-        });
+        element = document.querySelector('#p'+i+''+j);
 
-        if(result_diagonal != 3 && result_diagonal != -3){
-                return false;
+        if(board[i][j] !== 0){
+            return 0;
+        }
+
+        if(player1){
+            element.innerHTML = 'X';
+            count++;
+            player1 = false;
+            player2 = true;
+            board[i][j] = 1;
+            if(checkDiagonal() || check()){
+                console.log('player 1 ganhou!');
             }
-        return true;
+        }else{
+            element.innerHTML = 'O';
+            count++;
+            player1 = true;
+            player2 = false;
+            board[i][j] = -1;
+            if(checkDiagonal() || check()){
+                console.log('player 2 ganhou!');
+            }
+        }
     }
 
- console.log(checkDiagonal());
+    function tableconsole(){
+        console.table(board);
+    }
+
+
+    function checkDiagonal(){
+
+        let j = 3;
+        for(let i = 0; i<=2; i++){
+            result_diagonalx += board[i][i];
+            j -= 1;
+            result_diagonaly += board[i][j];
+        }
+
+        if(result_diagonalx == 3 || result_diagonalx == -3 || result_diagonaly == 3 || result_diagonaly == -3){
+            result_diagonalx = 0;
+            result_diagonaly = 0;
+            return true;
+        }else{
+            result_diagonalx = 0;
+            result_diagonaly = 0;
+            return false;
+        }
+    }
+
+    function check(){
+        for(let i = 0; i<=2; i++){
+            for(let j = 0; j<=2; j++){
+                result_row += board[i][j];
+                result_column += board[j][i];
+            }
+
+            if(result_row == 3 || result_row == -3 || result_column == 3 || result_column == -3){
+                result_row = 0;
+                result_column = 0;
+                return true;
+            }else{
+                result_row = 0;
+                result_column = 0;
+                return false;
+            }
+        }
+
+    }
+
+
+check();
 
 
     
