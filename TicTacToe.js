@@ -10,6 +10,7 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
     let element;
 
     let test = 0;
+    let test2 = 0;
 
     function play(i, j){
 
@@ -60,8 +61,8 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
         }else{
             result_diagonalx = 0;
             result_diagonaly = 0;
-            return false;
         }
+        return false;
     }
 
     function check(){
@@ -78,19 +79,9 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
             }else{
                 result_row = 0;
                 result_column = 0;
-                return false;
             }
         }
+        return false;
     }
 
-    function check2(){
-        for(let i = 0; i<=2; i++){
-            for(let j = 0; j<=2; j++){
-                //test += board[i][j];
-                console.log(board[i][j]);
-            }
-            console.log(test);
-        }
-        console.table(board);
-    }
 

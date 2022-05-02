@@ -11,6 +11,7 @@
             justify-content: center;
             align-items: center;
             padding-top: 100px;
+            flex-direction: column;
         }
 
         td{
@@ -35,28 +36,51 @@
         .bleft{
             border-left: 1px solid;
         }
+
+        .hidden{
+            display: none;
+        }
+
+        .winner{
+            width: 600px;
+            background-color: rgb(148, 235, 202);
+            border: 1px solid rgb(121, 118, 118);
+            border-radius: 3px;
+            padding: 4px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .table{
+            width: 600px;
+        }
+
     </style>
 </head>
 <body>
     <div id="container">
-        <table cellspacing="0">
-            <tr>
-                <td id="p00" class="bbottom bright" onclick="play(0,0)"></td>
-                <td id="p01" class="bbottom" onclick="play(0,1)"></td>
-                <td id="p02" class="bleft bbottom" onclick="play(0,2)"></td>
-            </tr>
-            <tr>
-                <td id="p10" class="bright bbottom" onclick="play(1,0)"></td>
-                <td id="p11" class="bbottom" onclick="play(1,1)"></td>
-                <td id="p12" class="bleft bbottom" onclick="play(1,2)"></td>
-            </tr>
-            <tr>
-                <td id="p20" class="bright" onclick="play(2,0)"></td>
-                <td id="p21" onclick="play(2,1)"></td>
-                <td id="p22" class="bleft" onclick="play(2,2)"></td>
-            </tr>
-        </table>
-        <button onclick="check2()">mostrar tabela</button>
+        <div class="table">
+            <table cellspacing="0">
+                <tr>
+                    <td id="p00" class="bbottom bright" onclick="play(0,0)"></td>
+                    <td id="p01" class="bbottom" onclick="play(0,1)"></td>
+                    <td id="p02" class="bleft bbottom" onclick="play(0,2)"></td>
+                </tr>
+                <tr>
+                    <td id="p10" class="bright bbottom" onclick="play(1,0)"></td>
+                    <td id="p11" class="bbottom" onclick="play(1,1)"></td>
+                    <td id="p12" class="bleft bbottom" onclick="play(1,2)"></td>
+                </tr>
+                <tr>
+                    <td id="p20" class="bright" onclick="play(2,0)"></td>
+                    <td id="p21" onclick="play(2,1)"></td>
+                    <td id="p22" class="bleft" onclick="play(2,2)"></td>
+                </tr>
+            </table>
+        </div>
+        <div class="winner">
+            teste
+        </div>
     </div>
 </body>
 <script type="text/javascript" src="TicTacToe.js"></script>
