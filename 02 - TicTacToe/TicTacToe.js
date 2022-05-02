@@ -1,16 +1,16 @@
 let board = [[0,0,0],[0,0,0],[0,0,0]];
+    let result = null;
     let player1 = true;
     let player2 = false;
+    let score1 = 0;
+    let score2 = 0;
+    let draw = 0;
     let plays = 0;
     let result_row = 0;
     let result_column = 0;
     let result_diagonalx = 0;
     let result_diagonaly = 0;
-    let count = 0;
     let element;
-
-    let test = 0;
-    let test2 = 0;
 
     function play(i, j){
 
@@ -22,27 +22,44 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
 
         if(player1){
             element.innerHTML = 'X';
-            count++;
             player1 = false;
             player2 = true;
             board[i][j] = 1;
+            plays++;
+            score1++;
             if(checkDiagonal() || check()){
-                console.log('player 1 ganhou!');
+                result = 'x';
+                winner(result);
             }
         }else{
             element.innerHTML = 'O';
-            count++;
             player1 = true;
             player2 = false;
             board[i][j] = -1;
+            plays++;
+            socore2++;
             if(checkDiagonal() || check()){
-                console.log('player 2 ganhou!');
+                result = 'o';
+                winner(result);
             }
+        }
+        if(plays == 9 && result == null){
+            draw++;
+            winner(result);
+            console.log('draw');
         }
     }
 
-    function tableconsole(){
-        console.table(board);
+    function winner(res){
+        let resultGame = document.querySelector('.winner');
+
+        if(res == 'x'){
+            resultGame.innerHTML = 'Player 1  ( X ) Win';
+        }else if(res == 'o'){
+            resultGame.innerHTML = 'Player 2 ( O ) Win';
+        }else{
+            resultGame.innerHTML = 'Draw!!';
+        }
     }
 
     function checkDiagonal(){
@@ -83,5 +100,10 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
         }
         return false;
     }
+
+    function table(){
+        console.table(board);
+    }
+
 
 

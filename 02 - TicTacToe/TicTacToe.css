@@ -1,0 +1,68 @@
+#container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 100px;
+    flex-direction: column;
+    font-family: 'Rubik', sans-serif;
+}
+
+td{
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    font-size: 50px;
+}
+
+.btop{
+    border-top: 1px solid;
+}
+
+.bbottom{
+    border-bottom: 1px solid;
+}
+
+.bright{
+    border-right: 1px solid;
+}
+
+.bleft{
+    border-left: 1px solid;
+}
+
+.hidden{
+    display: none;
+}
+
+.winner{
+    width: 600px;
+    background-color: rgb(148, 235, 202);
+    border: 1px solid rgb(179, 174, 174);
+    border-radius: 3px;
+    padding: 4px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.info{
+    width: 600px;
+    background-color: rgb(75, 23, 117);
+    color: #fff;
+    border: 1px solid rgb(190, 187, 187);
+    border-radius: 3px;
+    padding: 4px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.table{
+    margin: 5px;
+}
+
+#score1{
+    margin-right: 10px;
+}
+
+#draw{
+    margin-right: 10px;
+}
