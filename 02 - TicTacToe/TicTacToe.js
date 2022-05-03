@@ -39,8 +39,31 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
             plays++;
             turn = 'Player 2 ( "O" )';
             document.querySelector('#turn').innerHTML = turn;
-            if(checkDiagonal() || checkColumn() || checkRow()){
+            if(checkDiagonal()){
+                if(diagonalx.length > 0){
+                    for(let i = 0; i<=2; i++){
+                        document.querySelector('#'+diagonalx[i]).classList.add('green');
+                    }
+                }else{
+                    for(let i = 0; i<=2; i++){
+                        document.querySelector('#'+diagonaly[i]).classList.add('green');
+                    }
+                }
                 result = 'x';
+                winner(result);
+            }else
+            if(checkColumn()){
+                result = 'x';
+                for(let i = 0; i<=2; i++){
+                    document.querySelector('#'+column[i]).classList.add('green');
+                }
+                winner(result);
+            }else
+            if(checkRow()){
+                result = 'x';
+                for(let i = 0; i<=2; i++){
+                    document.querySelector('#'+row[i]).classList.add('green');
+                }
                 winner(result);
             }
         }else{
@@ -51,10 +74,31 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
             plays++;
             turn = 'Player 1 ( "X" )';
             document.querySelector('#turn').innerHTML = turn;
-            if(checkDiagonal() || checkColumn() || checkRow()){
+            if(checkDiagonal()){
+                if(diagonalx.length > 0){
+                    for(let i = 0; i<=2; i++){
+                        document.querySelector('#'+diagonalx[i]).classList.add('green');
+                    }
+                }else{
+                    for(let i = 0; i<=2; i++){
+                        document.querySelector('#'+diagonaly[i]).classList.add('green');
+                    }
+                }
                 result = 'o';
                 winner(result);
-            }
+            }else if(checkRow()){
+                result = 'o';
+                for(let i = 0; i<=2; i++){
+                    document.querySelector('#'+row[i]).classList.add('green');
+                }
+                winner(result);
+            }else if(checkColumn()){
+                result = 'o';
+                for(let i = 0; i<=2; i++){
+                    document.querySelector('#'+column[i]).classList.add('green');
+                }
+                winner(result);
+            }               
         }
         if(plays == 9 && result == null){
             winner(result);
@@ -94,6 +138,9 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
         result_diagonalx = 0;
         result_diagonaly = 0;
         resultField.classList.add('hidden');
+        let clearGreen = document.querySelectorAll('.green').forEach(function(item, $i){
+            item.classList.remove('green');
+        });
     }
 
     function checkDiagonal(){
@@ -114,11 +161,9 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
         }else{
             result_diagonalx = 0;
             result_diagonaly = 0;
-            diagonalx.splice();
-            diagonaly.splice();
+            diagonalx = [];
+            diagonaly = [];
         }
-        console.log(diagonalx);
-        console.log(diagonaly);
         return false;
     }
 
@@ -133,10 +178,9 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
                 return true;
             }else{
                 result_row = 0;
-                row.splice();
+                row = [];
             }
         }
-        console.log(row);
         return false;
     }
 
@@ -151,10 +195,9 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
                 return true;
             }else{
                 result_column = 0;
-                column.splice();
+                column = [];
             }
         }
-        console.log(column);
         return false;
     }
 
