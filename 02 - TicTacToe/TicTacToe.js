@@ -14,6 +14,10 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
     let resultField = document.querySelector('.winner');
     let resultGame = document.querySelector('#result');
     let turn;
+    let row =[];
+    let column = [];
+    let diagonalx = [];
+    let diagonaly = [];
 
     function play(i, j){
 
@@ -33,9 +37,9 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
             player2 = true;
             board[i][j] = 1;
             plays++;
-            turn = 'Player 2 ( O )';
+            turn = 'Player 2 ( "O" )';
             document.querySelector('#turn').innerHTML = turn;
-            if(checkDiagonal() || check()){
+            if(checkDiagonal() || checkColumn() || checkRow()){
                 result = 'x';
                 winner(result);
             }
@@ -45,9 +49,9 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
             player2 = false;
             board[i][j] = -1;
             plays++;
-            turn = 'Player 1 ( X )';
+            turn = 'Player 1 ( "X" )';
             document.querySelector('#turn').innerHTML = turn;
-            if(checkDiagonal() || check()){
+            if(checkDiagonal() || checkColumn() || checkRow()){
                 result = 'o';
                 winner(result);
             }
@@ -97,37 +101,60 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
         let j = 3;
         for(let i = 0; i<=2; i++){
             result_diagonalx += board[i][i];
+            diagonalx.push('p'+i+i);
             j -= 1;
             result_diagonaly += board[i][j];
+            diagonaly.push('p'+i+j);
         }
 
-        if(result_diagonalx == 3 || result_diagonalx == -3 || result_diagonaly == 3 || result_diagonaly == -3){
-            result_diagonalx = 0;
-            result_diagonaly = 0;
+        if(result_diagonalx == 3 || result_diagonalx == -3){
+            return true;
+        }else if(result_diagonaly == 3 || result_diagonaly == -3){
             return true;
         }else{
             result_diagonalx = 0;
             result_diagonaly = 0;
+            diagonalx.splice();
+            diagonaly.splice();
         }
+        console.log(diagonalx);
+        console.log(diagonaly);
         return false;
     }
 
-    function check(){
+    function checkRow(){
         for(let i = 0; i<=2; i++){
             for(let j = 0; j<=2; j++){
                 result_row += board[i][j];
-                result_column += board[j][i];
+                row.push('p'+i+j);
             }
 
-            if(result_row == 3 || result_row == -3 || result_column == 3 || result_column == -3){
-                result_row = 0;
-                result_column = 0;
+            if(result_row == 3 || result_row == -3){
                 return true;
             }else{
                 result_row = 0;
-                result_column = 0;
+                row.splice();
             }
         }
+        console.log(row);
+        return false;
+    }
+
+    function checkColumn(){
+        for(let i = 0; i<=2; i++){
+            for(let j = 0; j<=2; j++){
+                result_column += board[j][i];
+                column.push('p'+j+i);
+            }
+
+            if(result_column == 3 || result_column == -3){
+                return true;
+            }else{
+                result_column = 0;
+                column.splice();
+            }
+        }
+        console.log(column);
         return false;
     }
 
