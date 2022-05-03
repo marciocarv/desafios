@@ -11,6 +11,9 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
     let result_diagonalx = 0;
     let result_diagonaly = 0;
     let element;
+    let resultField = document.querySelector('.winner');
+    let resultGame = document.querySelector('#result');
+    let turn;
 
     function play(i, j){
 
@@ -20,13 +23,18 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
             return 0;
         }
 
+        if(result != null){
+            return 0;
+        }
+
         if(player1){
             element.innerHTML = 'X';
             player1 = false;
             player2 = true;
             board[i][j] = 1;
             plays++;
-            score1++;
+            turn = 'Player 2 ( O )';
+            document.querySelector('#turn').innerHTML = turn;
             if(checkDiagonal() || check()){
                 result = 'x';
                 winner(result);
@@ -37,29 +45,51 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
             player2 = false;
             board[i][j] = -1;
             plays++;
-            socore2++;
+            turn = 'Player 1 ( X )';
+            document.querySelector('#turn').innerHTML = turn;
             if(checkDiagonal() || check()){
                 result = 'o';
                 winner(result);
             }
         }
         if(plays == 9 && result == null){
-            draw++;
             winner(result);
-            console.log('draw');
         }
     }
 
     function winner(res){
-        let resultGame = document.querySelector('.winner');
-
+        resultField.classList.remove('hidden');
         if(res == 'x'){
             resultGame.innerHTML = 'Player 1  ( X ) Win';
+            score1++;
+            document.querySelector('#score1').innerHTML = score1;
         }else if(res == 'o'){
             resultGame.innerHTML = 'Player 2 ( O ) Win';
+            score2++;
+            document.querySelector('#score2').innerHTML = score2;
         }else{
             resultGame.innerHTML = 'Draw!!';
+            draw++;
+            document.querySelector('#draw').innerHTML = draw;
         }
+    }
+
+    function reset(){
+        let field_board = document.querySelectorAll('.field_board');
+
+        field_board.forEach(function(field, key){
+            field.innerHTML = '';
+        });
+        board = [[0,0,0],[0,0,0],[0,0,0]];
+        result = null;
+        player1 = true;
+        player2 = false;
+        plays = 0;
+        result_row = 0;
+        result_column = 0;
+        result_diagonalx = 0;
+        result_diagonaly = 0;
+        resultField.classList.add('hidden');
     }
 
     function checkDiagonal(){

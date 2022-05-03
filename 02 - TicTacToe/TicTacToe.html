@@ -15,29 +15,30 @@
         <div class="info">
             <p>SCORE:</p>
             <p>PLAYER 1 (X): <span id="score1">0</span> | Draw: <span id="draw">0</span> | PLAYER 2 (O): <span id="score2">0</span></p>
+            <p>Turn: <span id="turn">Player 1 ( X )</span></p>
         </div>
         <div class="table">
             <table cellspacing="0">
                 <tr>
-                    <td id="p00" class="bbottom bright" onclick="play(0,0)"></td>
-                    <td id="p01" class="bbottom" onclick="play(0,1)"></td>
-                    <td id="p02" class="bleft bbottom" onclick="play(0,2)"></td>
+                    <td id="p00" class="bbottom bright field_board" onclick="play(0,0)"></td>
+                    <td id="p01" class="bbottom field_board" onclick="play(0,1)"></td>
+                    <td id="p02" class="bleft bbottom field_board" onclick="play(0,2)"></td>
                 </tr>
                 <tr>
-                    <td id="p10" class="bright bbottom" onclick="play(1,0)"></td>
-                    <td id="p11" class="bbottom" onclick="play(1,1)"></td>
-                    <td id="p12" class="bleft bbottom" onclick="play(1,2)"></td>
+                    <td id="p10" class="bright bbottom field_board" onclick="play(1,0)"></td>
+                    <td id="p11" class="bbottom field_board" onclick="play(1,1)"></td>
+                    <td id="p12" class="bleft bbottom field_board" onclick="play(1,2)"></td>
                 </tr>
                 <tr>
-                    <td id="p20" class="bright" onclick="play(2,0)"></td>
-                    <td id="p21" onclick="play(2,1)"></td>
-                    <td id="p22" class="bleft" onclick="play(2,2)"></td>
+                    <td id="p20" class="bright field_board" onclick="play(2,0)"></td>
+                    <td id="p21" class="field_board" onclick="play(2,1)"></td>
+                    <td id="p22" class="bleft field_board" onclick="play(2,2)"></td>
                 </tr>
             </table>
         </div>
-        <div class="winner">
+        <div class="winner hidden">
             <p id="result"></p>
-            <a href="#" onclick="">Reset</a>
+            <a id="reset" href="#" onclick="reset()">Reset</a>
         </div>
     </div>
 </body>

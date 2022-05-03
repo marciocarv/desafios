@@ -42,6 +42,14 @@ td{
     padding: 4px;
     text-align: center;
     margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden{
+    display: none;
 }
 
 .info{
@@ -59,10 +67,31 @@ td{
     margin: 5px;
 }
 
+#turn{
+    color: rgb(116, 201, 116);
+}
+
 #score1{
-    margin-right: 10px;
+    margin-right: 15px;
+}
+
+#score1, #score2, #draw{
+    color: rgb(230, 238, 124);
 }
 
 #draw{
+    margin-right: 15px;
+}
+
+#reset{
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgb(8, 151, 144);
+    color: #fff;
+    text-decoration: none;
+    height: 20px;
+}
+
+#result{
     margin-right: 10px;
 }
