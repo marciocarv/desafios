@@ -45,6 +45,7 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
                         document.querySelector('#'+diagonalx[i]).classList.add('green');
                     }
                 }else{
+                    console.log(diagonaly);
                     for(let i = 0; i<=2; i++){
                         document.querySelector('#'+diagonaly[i]).classList.add('green');
                     }
@@ -75,6 +76,8 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
             turn = 'Player 1 ( "X" )';
             document.querySelector('#turn').innerHTML = turn;
             if(checkDiagonal()){
+                console.log(diagonalx.length);
+                console.log(diagonaly.length);
                 if(diagonalx.length > 0){
                     for(let i = 0; i<=2; i++){
                         document.querySelector('#'+diagonalx[i]).classList.add('green');
@@ -155,8 +158,10 @@ let board = [[0,0,0],[0,0,0],[0,0,0]];
         }
 
         if(result_diagonalx == 3 || result_diagonalx == -3){
+            diagonaly = [];
             return true;
         }else if(result_diagonaly == 3 || result_diagonaly == -3){
+            diagonalx = [];
             return true;
         }else{
             result_diagonalx = 0;
