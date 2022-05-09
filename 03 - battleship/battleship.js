@@ -10,7 +10,7 @@ const ships = [
         quantity: 1,
         size: 5
     },
-    {
+    /*{
         name: 'battleship',
         quantity: 2,
         size: 4
@@ -29,7 +29,7 @@ const ships = [
         name: 'patrolBoat',
         quantity: 5,
         size: 2
-    },
+    },*/
 ]
 
 function createFields(){
@@ -58,19 +58,44 @@ function setShips(){
             let startFieldy = Math.floor(Math.random() * 10);
             let direction = Math.floor(Math.random() * 2);
 
-            board.map((field)=>{
+            board.map((field, index)=>{
                 if(field.x == startFieldx && field.y == startFieldy){
-                    if(direction == 0){ //horizontal
-                        
-                    } else{ //vertical
-
-                    }
+                    checkFit(startFieldx, startFieldy, direction, ship.size);
+                    checkEmpty(startFieldx, startFieldy, direction, ship.size, index);
 
                     field.value = ship.name.concat(i);
                 }
             });
         }
     });
+}
+
+function checkFit(startFieldx, startFieldy, direction, size){
+    if(direction == 0){ //horizontal
+        if(startFieldy + size - 1 > 9){
+            return false;
+        }
+
+        return true;
+    }else{ //vertical
+        if(startFieldx + size - 1 > 9){
+            return false;
+        }
+
+        return true;
+    }
+}
+
+function checkEmpty(startFieldx, startFieldy, direction, size){
+    if(direction == 0){ //horizontal
+        for(let i = 1; i<=size; i++){
+            if(board.x == startFieldx){
+
+            }
+        }
+    }else{ // vertical
+
+    }
 }
 
 createFields();
