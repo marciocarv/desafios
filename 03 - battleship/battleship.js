@@ -61,7 +61,7 @@ function setShips(){
             board.map((field, index)=>{
                 if(field.x == startFieldx && field.y == startFieldy){
                     checkFit(startFieldx, startFieldy, direction, ship.size);
-                    checkEmpty(startFieldx, startFieldy, direction, ship.size, index);
+                    checkEmpty(startFieldx, startFieldy, direction, ship.size);
 
                     field.value = ship.name.concat(i);
                 }
@@ -88,11 +88,14 @@ function checkFit(startFieldx, startFieldy, direction, size){
 
 function checkEmpty(startFieldx, startFieldy, direction, size){
     if(direction == 0){ //horizontal
-        for(let i = 1; i<=size; i++){
-            if(board.x == startFieldx){
-
+        for(let i = 0; i<size; i++){
+            let result = board.find( field => field.x === startFieldx && field.y === startFieldy+i);
+            if(result.value != 0){
+                return false; // já está ocupado
             }
         }
+        return true; // não está ocupado
+
     }else{ // vertical
 
     }
@@ -100,6 +103,10 @@ function checkEmpty(startFieldx, startFieldy, direction, size){
 
 createFields();
 
-setShips();
+if(checkEmpty(2,2,0,3)){
+    console.log('não está ocupado');
+}else{
+    console.log('está ocupado');
+}
 
-console.log(board);
+//setShips();
