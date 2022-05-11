@@ -22,12 +22,12 @@ const ships = [
     },
     {
         name: 'submarine',
-        quantity: 4,
+        quantity: 2,
         size: 3
     },
     {
         name: 'patrolBoat',
-        quantity: 5,
+        quantity: 1,
         size: 2
     },*/
 ]
@@ -97,16 +97,26 @@ function checkEmpty(startFieldx, startFieldy, direction, size){
         return true; // não está ocupado
 
     }else{ // vertical
-
+        for(let i = 0; i<size; i++){
+            let result = board.find( field => field.x === startFieldx+i && field.y === startFieldy);
+            if(result.value != 0){
+                return false; // já está ocupado
+            }
+        }
+        return true; // não está ocupado
     }
 }
 
+console.timeLog
+
 createFields();
 
-if(checkEmpty(2,2,0,3)){
+if(checkEmpty(0,2,1,3)){
     console.log('não está ocupado');
 }else{
     console.log('está ocupado');
 }
+
+//console.table(board);
 
 //setShips();
