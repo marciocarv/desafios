@@ -8,7 +8,7 @@ const ships = [
     {
         name: 'carrier',
         quantity: 1,
-        size: 5
+        size: 3
     },
     /*{
         name: 'battleship',
@@ -54,69 +54,76 @@ function createFields(){
 function setShips(){
     ships.map((ship)=>{
         for(let i = 0; i<ship.quantity; i++){
-            let startFieldx = Math.floor(Math.random() * 10);
-            let startFieldy = Math.floor(Math.random() * 10);
-            let direction = Math.floor(Math.random() * 2);
-
-            board.map((field, index)=>{
-                if(field.x == startFieldx && field.y == startFieldy){
-                    checkFit(startFieldx, startFieldy, direction, ship.size);
-                    checkEmpty(startFieldx, startFieldy, direction, ship.size);
-
-                    field.value = ship.name.concat(i);
-                }
-            });
+            sort(ship);
         }
     });
 }
 
-function checkFit(startFieldx, startFieldy, direction, size){
-    if(direction == 0){ //horizontal
-        if(startFieldy + size - 1 > 9){
-            return false;
-        }
+function sort(ship){
+    let startFieldx = Math.floor(Math.random() * 10);
+    let startFieldy = Math.floor(Math.random() * 10);
+    //let direction = Math.floor(Math.random() * 2);
+    //let startFieldx = 4;
+    //let startFieldy = 8;
+    let direction = 0;
 
-        return true;
-    }else{ //vertical
-        if(startFieldx + size - 1 > 9){
-            return false;
-        }
+    fieldsChecked = check(startFieldx, startFieldy, direction, ship);
 
-        return true;
+    for(let i=0; i<ship.size; i++){
+        board[fieldsChecked[i]] = ship.name;
     }
+
+    /*board.map((field, index)=>{
+        if(field.x === startFieldx && field.y === startFieldy){
+            for(let i=0; i<ship.size; i++){
+                field.value = ship.name;
+                console.log(field.value);
+            }
+        }
+    });*/
 }
 
-function checkEmpty(startFieldx, startFieldy, direction, size){
+function check(startFieldx, startFieldy, direction, ship){
+    let fieldsChecked = [];
     if(direction == 0){ //horizontal
-        for(let i = 0; i<size; i++){
+        if(startFieldy + ship.size - 1 > 9){
+            console.log('não cabe');
+            sort(ship); // não cabe e tentará novamente.
+        }
+        // cabe
+        for(let i = 0; i<ship.size; i++){
             let result = board.find( field => field.x === startFieldx && field.y === startFieldy+i);
+            console.log(result);
             if(result.value != 0){
-                return false; // já está ocupado
+                console.log('ja está ocupado');
+                sort(ship); // já está ocupado e tentará novamente
             }
+            fieldsChecked.push(result.x+''+result.y);
         }
-        return true; // não está ocupado
-
-    }else{ // vertical
-        for(let i = 0; i<size; i++){
+        return fieldsChecked; // não está ocupado
+        
+    }else{ //vertical
+        if(startFieldx + ship.size - 1 > 9){
+            console.log('não cabe');
+            sort(ship); // não cabe e tentará novamente.
+        }
+        // cabe
+        for(let i = 0; i<ship.size; i++){
             let result = board.find( field => field.x === startFieldx+i && field.y === startFieldy);
+            //console.log(result);
             if(result.value != 0){
-                return false; // já está ocupado
+                console.log('ja está ocupado');
+                sort(ship); // já está ocupado e tentará novamente
             }
+            fieldsChecked.push(result.x+''+result.y);
         }
-        return true; // não está ocupado
+        return fieldsChecked;
     }
 }
-
-console.timeLog
 
 createFields();
 
-if(checkEmpty(0,2,1,3)){
-    console.log('não está ocupado');
-}else{
-    console.log('está ocupado');
-}
 
-//console.table(board);
+setShips();
 
-//setShips();
+console.log(board);
