@@ -7,10 +7,10 @@ let board = [];
 const ships = [
     {
         name: 'carrier',
-        quantity: 1,
-        size: 3
-    },
-    /*{
+        quantity: 2,
+        size: 5
+    },/*
+    {
         name: 'battleship',
         quantity: 2,
         size: 4
@@ -44,7 +44,7 @@ function createFields(){
                 {
                     x: i,
                     y: j,
-                    value: 0 
+                    value: 'agua' 
                 }
             );
         }
@@ -62,6 +62,8 @@ function setShips(){
 function sort(ship){
     let startFieldx = Math.floor(Math.random() * 10);
     let startFieldy = Math.floor(Math.random() * 10);
+
+    console.log(startFieldx, startFieldy);
     //let direction = Math.floor(Math.random() * 2);
     //let startFieldx = 4;
     //let startFieldy = 8;
@@ -69,18 +71,15 @@ function sort(ship){
 
     fieldsChecked = check(startFieldx, startFieldy, direction, ship);
 
-    for(let i=0; i<ship.size; i++){
-        board[fieldsChecked[i]] = ship.name;
+    if(!fieldsChecked){
+        sort(ship); //se não cabe ele chama novamente
+    }else{
+        /*for(let i=0; i<ship.size; i++){
+            board[fieldsChecked[i]].value = ship.name;
+        }*/
     }
 
-    /*board.map((field, index)=>{
-        if(field.x === startFieldx && field.y === startFieldy){
-            for(let i=0; i<ship.size; i++){
-                field.value = ship.name;
-                console.log(field.value);
-            }
-        }
-    });*/
+    
 }
 
 function check(startFieldx, startFieldy, direction, ship){
@@ -88,29 +87,34 @@ function check(startFieldx, startFieldy, direction, ship){
     if(direction == 0){ //horizontal
         if(startFieldy + ship.size - 1 > 9){
             console.log('não cabe');
-            sort(ship); // não cabe e tentará novamente.
+            return false; // não cabe
         }
         // cabe
         for(let i = 0; i<ship.size; i++){
-            let result = board.find( field => field.x === startFieldx && field.y === startFieldy+i);
+            console.log(board[startFieldx+''+(startFieldy+i)]);
+            /*if(board[startFieldx+''+(startFieldy+i)].value =! 'agua'){
+                console.log('vazio');
+                fieldsChecked.push(startFieldx+''+(startFieldy+i));
+            }else{
+                console.log('ocupado');
+                return false;
+            }*/
+            /*let result = board.find( field => field.x === startFieldx && field.y === startFieldy+i);
             console.log(result);
-            if(result.value != 0){
+            if(result.value != 'agua'){
                 console.log('ja está ocupado');
-                sort(ship); // já está ocupado e tentará novamente
-            }
-            fieldsChecked.push(result.x+''+result.y);
+                return false; // já está ocupado e tentará novamente
+            }*/
         }
         return fieldsChecked; // não está ocupado
         
     }else{ //vertical
         if(startFieldx + ship.size - 1 > 9){
-            console.log('não cabe');
-            sort(ship); // não cabe e tentará novamente.
+            return false; // não cabe
         }
         // cabe
         for(let i = 0; i<ship.size; i++){
             let result = board.find( field => field.x === startFieldx+i && field.y === startFieldy);
-            //console.log(result);
             if(result.value != 0){
                 console.log('ja está ocupado');
                 sort(ship); // já está ocupado e tentará novamente
@@ -118,6 +122,7 @@ function check(startFieldx, startFieldy, direction, ship){
             fieldsChecked.push(result.x+''+result.y);
         }
         return fieldsChecked;
+        console.log('cabe v');
     }
 }
 
