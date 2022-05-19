@@ -7,9 +7,9 @@ let board = [];
 const ships = [
     {
         name: 'carrier',
-        quantity: 2,
+        quantity: 1,
         size: 5
-    },/*
+    },
     {
         name: 'battleship',
         quantity: 2,
@@ -22,20 +22,21 @@ const ships = [
     },
     {
         name: 'submarine',
-        quantity: 2,
-        size: 3
+        quantity: 4,
+        size: 2
     },
     {
         name: 'patrolBoat',
-        quantity: 1,
-        size: 2
-    },*/
+        quantity: 5,
+        size: 1
+    },
 ]
 
 function createFields(){
     for(let i = 0; i<10; i++){
         for(let j = 0; j<10; j++){
-            let id = 'field'.concat(',', i.toString(), ',',j.toString());
+            //let id = 'field'.concat(',', i.toString(), ',',j.toString());
+            let id = 'field'.concat(parseInt(i+''+j));
             let field = document.createElement('div');
             field.setAttribute('id', id);
             field.setAttribute('class', 'field');
@@ -64,19 +65,19 @@ function sort(ship){
     let startFieldy = Math.floor(Math.random() * 10);
 
     console.log(startFieldx, startFieldy);
-    //let direction = Math.floor(Math.random() * 2);
-    //let startFieldx = 4;
-    //let startFieldy = 8;
-    let direction = 0;
+    let direction = Math.floor(Math.random() * 2);
 
     fieldsChecked = check(startFieldx, startFieldy, direction, ship);
 
     if(!fieldsChecked){
         sort(ship); //se não cabe ele chama novamente
     }else{
-        /*for(let i=0; i<ship.size; i++){
+        for(let i=0; i<ship.size; i++){
             board[fieldsChecked[i]].value = ship.name;
-        }*/
+            console.log(fieldsChecked);
+            document.querySelector('#'+'field'.concat(fieldsChecked[i])).classList.add(ship.name);
+            //console.log(document.querySelector('#'+'field'.concat(fieldsChecked[i])));
+        }
     }
 
     
@@ -91,38 +92,32 @@ function check(startFieldx, startFieldy, direction, ship){
         }
         // cabe
         for(let i = 0; i<ship.size; i++){
-            console.log(board[startFieldx+''+(startFieldy+i)]);
-            /*if(board[startFieldx+''+(startFieldy+i)].value =! 'agua'){
+            if(board[parseInt(startFieldx+''+(startFieldy+i))].value === 'agua'){
+                fieldsChecked.push(parseInt(startFieldx+''+(startFieldy+i)));
                 console.log('vazio');
-                fieldsChecked.push(startFieldx+''+(startFieldy+i));
             }else{
                 console.log('ocupado');
                 return false;
-            }*/
-            /*let result = board.find( field => field.x === startFieldx && field.y === startFieldy+i);
-            console.log(result);
-            if(result.value != 'agua'){
-                console.log('ja está ocupado');
-                return false; // já está ocupado e tentará novamente
-            }*/
+            }
         }
         return fieldsChecked; // não está ocupado
         
     }else{ //vertical
         if(startFieldx + ship.size - 1 > 9){
+            console.log('não cabe');
             return false; // não cabe
         }
         // cabe
         for(let i = 0; i<ship.size; i++){
-            let result = board.find( field => field.x === startFieldx+i && field.y === startFieldy);
-            if(result.value != 0){
-                console.log('ja está ocupado');
-                sort(ship); // já está ocupado e tentará novamente
+            if(board[parseInt((startFieldx+i)+''+startFieldy)].value === 'agua'){
+                fieldsChecked.push(parseInt(startFieldx+i+''+startFieldy));
+                console.log('vazio');
+            }else{
+                console.log('ocupado');
+                return false;
             }
-            fieldsChecked.push(result.x+''+result.y);
         }
-        return fieldsChecked;
-        console.log('cabe v');
+        return fieldsChecked; // não está ocupado
     }
 }
 
