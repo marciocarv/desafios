@@ -24,16 +24,92 @@
 .field{
     width: 50px;
     height: 50px;
-    background-color: rgb(53, 169, 223);
     border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:rgb(216, 48, 48);
+}
+
+.water{
+    background-color: rgb(53, 169, 223);
+}
+
+.waterHited{
+    background-color: rgb(27, 121, 165);
+}
+
+.carrier{
+    background-color: rgb(144, 75, 209);
+}
+
+.battleship{
+    background-color: rgb(60, 224, 134);
+}
+
+.destroyer{
+    background-color: rgb(216, 48, 48);
+}
+
+.submarine{
+    background-color: rgb(206, 219, 26);
+}
+
+.patrolBoat{
+    background-color: rgb(201, 9, 143);
 }
 
 #score{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
 }
 
 #score #atts{
     margin-right: 35px;
+}
+
+.ships{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 520px;
+}
+
+.subtitle{
+    width: 20px;
+    height: 20px;
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.squares{
+    display: flex;
+    flex-wrap: wrap;
+    width: 30%;
+}
+
+.nameShip{
+    padding-left: 5px;
+    width: 60%;
+}
+
+.ships p{
+    width: 100%;
+}
+
+.message{
+    margin: 0px;
+}
+
+.lost{
+    margin-right: 10px;
+    color: rgb(238, 95, 95);
+    font-size: 30px;
+}
+
+.win{
+    margin-right: 10px;
+    color: rgb(94, 231, 105);
+    font-size: 30px;
 }
