@@ -113,3 +113,7 @@
     color: rgb(94, 231, 105);
     font-size: 30px;
 }
+
+.hidden{
+    display: none;
+}

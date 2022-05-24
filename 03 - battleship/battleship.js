@@ -1,6 +1,6 @@
 let hit = 0;
 let hits = document.querySelector('#hits');
-let attempts = 10;
+let attempts = 70;
 let atts = document.querySelector('#atts');
 let battleField = document.querySelector('#battleField');
 let board = [];
@@ -9,6 +9,9 @@ let message = document.querySelector('.message');
 let score = document.querySelector('#score');
 let resultGame = true;
 let reset;
+let winMessage = document.querySelector('.win');
+let lostMessage = document.querySelector('.lost');
+let ResetButon = document.querySelector('.reset');
 
 const ships = [
     {
@@ -81,9 +84,7 @@ function sort(ship){
         for(let i=0; i<ship.size; i++){
             board[fieldsChecked[i]].value = ship.name;
         }
-    }
-
-    
+    }    
 }
 
 function check(startFieldx, startFieldy, direction, ship){
@@ -126,73 +127,82 @@ function check(startFieldx, startFieldy, direction, ship){
 
 function endGame(result){
     if(result == 'win'){
-        message.innerHTML = '';
-        score.innerHTML = '';
-        score.innerHTML += '<p class=\"win\">You Win!</p>';
-        score.innerHTML += '<p><button class=\"reset\" id=\"reset\">reset game</button></p>';
+        winMessage.classList.remove('hidden');
+        ResetButon.classList.remove('hidden');
+        document.querySelector('.atts').classList.add('hidden');
+        document.querySelector('.hits').classList.add('hidden');
+        message.classList.add('hidden');
         resultGame = false;
     }else{
-        message.innerHTML = '';
-        score.innerHTML = '';
-        score.innerHTML += '<p class=\"lost\">You Lost!</p>';
-        score.innerHTML += '<p><button class=\"reset\" id=\"reset\">reset game</button></p>';
+        lostMessage.classList.remove('hidden');
+        ResetButon.classList.remove('hidden');
+        document.querySelector('.atts').classList.add('hidden');
+        document.querySelector('.hits').classList.add('hidden');
+        message.classList.add('hidden');
         resultGame = false;
     }
     reset = document.querySelector('#reset');
-    reset.addEventListener('click', resetGame());
+    reset.addEventListener('click', ()=>{
+        resetGame();
+    });
+}
+
+function start(){
+    fields = document.querySelectorAll('.field');
+
+    fields.forEach((item, index)=>{
+        item.addEventListener('click', ()=>{
+            if(!resultGame){
+                return false;
+            }
+            if(item.classList[1] === 'water'){
+                attempts--;
+                atts.innerHTML = attempts;
+            }
+            if(board[index].value === 'water'){
+                message.style.color = "rgb(241, 116, 116)";
+                message.innerHTML = 'Hit the water :(';
+                item.classList.remove('water');
+                item.classList.add('waterHited');
+                item.innerHTML = 'X';
+            }else{
+                message.style.color = "rgb(141, 240, 207)";
+                message.innerHTML = 'Hit the '+board[index].value;
+                item.classList.remove('water');
+                item.classList.add(board[index].value);
+                    hit++;
+                    hits.innerHTML = hit;
+            }
+            if(attempts == 0 && hit < 35){
+                endGame('lost');
+            }
+            if(hit == 35){
+                endGame('win');
+            }
+        })
+    });
 }
 
 function resetGame(){
-    document.querySelector
+    console.log('reset');
+    winMessage.classList.add('hidden');
+    lostMessage.classList.add('hidden');
+    ResetButon.classList.add('hidden');
+    document.querySelector('.atts').classList.remove('hidden');
+    document.querySelector('.hits').classList.remove('hidden');
+    message.classList.remove('hidden');
+    resultGame = true;
+
     hit = 0;
-    hits = document.querySelector('#hits');
     attempts = 70;
-    atts = document.querySelector('#atts');
-    battleField.innerHTML = '';
+    battleField.innerHTML = "";
     board = [];
     fields = [];
-    message = document.querySelector('.message');
-    score = document.querySelector('#score');
-    resultGame = true;
     createFields();
     setShips();
+    start();
 }
 
 createFields();
 setShips();
-
-fields = document.querySelectorAll('.field');
-
-fields.forEach((item, index)=>{
-    item.addEventListener('click', ()=>{
-        if(!resultGame){
-            return false;
-        }
-        if(item.classList[1] != 'waterHited'){
-            attempts--;
-            atts.innerHTML = attempts;
-        }
-        if(board[index].value === 'water'){
-            message.style.color = "rgb(241, 116, 116)";
-            message.innerHTML = 'Hit the water :(';
-            item.classList.remove('water');
-            item.classList.add('waterHited');
-            item.innerHTML = 'X';
-        }else{
-            message.style.color = "rgb(141, 240, 207)";
-            message.innerHTML = 'Hit the '+board[index].value;
-            item.classList.remove('water');
-            item.classList.add(board[index].value);
-            hit++;
-            hits.innerHTML = hit;
-        }
-        if(attempts == 0 && hit < 35){
-            endGame('lost');
-        }
-        if(hit == 35){
-            endGame('win');
-        }
-    })
-});
-
-console.log(board);
+start();
